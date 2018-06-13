@@ -495,7 +495,8 @@ $string['exclusivity_help'] = '<p>You can set a limit on the number of students 
 
 $string['location_help'] = 'Specify the scheduled location of the meeting.';
 
-$string['notifications_help'] = 'When this option is enabled, teachers and students will receive notifications when appointments are applied for or cancelled.';
+$string['notifications_help'] = 'When this option is enabled, teachers and students will receive notifications when appointments are 
+for or cancelled.';
 
 $string['staffrolename_help'] = '
 The label for the role who attends students. This is not necessarily a "teacher".';
@@ -506,6 +507,46 @@ and they will be unable to drop an appointment if it start in less than 2 hours.
 
 
 /* ***********  E-mail templates from here on ************ */
+
+/******************** Appoiment booked ********************/
+
+/************ Student confirmation **********/
+$string['email_bookingconfirmed_subject'] = '{$a->course_short}: New appointment';
+$string['email_bookingconfirmed_plain'] = 'Your appointment has been applied for on {$a->date} at {$a->time},
+for the course:
+
+{$a->course_short}: {$a->course}
+
+using the scheduler titled "{$a->module}" on the website: {$a->site}.';
+
+$string['email_bookingconfirmed_html'] = '<p>Your appointment appointment has been applied for on {$a->date} at {$a->time},<br/>
+for the course:
+
+<p>{$a->course_short}: <a href="{$a->course_url}">{$a->course}</a></p>
+
+<p>using the scheduler titled "<em><a href="{$a->scheduler_url}">{$a->module}</a></em>" on the website: <a href="{$a->site_url}">{$a->site}</a>.</p>';
+
+$string['email_bookingcancelled_subject'] = '{$a->course_short}: Appointment cancelled or moved';
+
+$string['email_bookingcancelled_plain'] = 'Your appointment on  {$a->date} at {$a->time},
+with the teacher {$a->staffrole} for course:
+
+{$a->course_short} : {$a->course}
+
+in the scheduler titled "{$a->module}" on the website : {$a->site}
+
+has been cancelled or moved.';
+
+$string['email_bookingcancelled_html'] = '<p>Your appointment on <strong>{$a->date}</strong> at <strong>{$a->time}</strong>,<br/>
+with the teacher <strong><a href="{$a->staffrole_url}">{$a->staffrole}</a></strong> for course :</p>
+
+<p><strong>{$a->course_short} : <a href="{$a->course_url}">{$a->course}</a></strong></p>
+
+<p>in the scheduler titled "<em><a href="{$a->scheduler_url}">{$a->module}</a></em>" on the website : <strong><a href="{$a->site_url}">{$a->site}</a></strong></p>
+
+<p><strong><span class="error">has been cancelled or moved</span></strong>.</p>';
+
+/************ Teacher confirmation **********/
 
 $string['email_applied_subject'] = '{$a->course_short}: New appointment';
 $string['email_applied_plain'] = 'An appointment has been applied for on {$a->date} at {$a->time},
