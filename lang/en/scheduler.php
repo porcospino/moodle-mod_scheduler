@@ -556,6 +556,51 @@ with <strong><a href="{$a->attendant_url}">{$a->attendant}</a></strong>.</p>
 
 <p>Location: <strong>{$a->location}</strong></p>';
 
+/******************* Slot deleted **************************/
+$string['email_deletedslot_subject'] = '{$a->course_short}: Slot cancelled by the teacher';
+$string['email_deletedslot_plain'] = 'The slot on {$a->date} at {$a->time},
+with the {$a->staffrole} {$a->attendant} for course:
+
+{$a->course_short}: {$a->course}
+
+in the scheduler titled "{$a->module}" on the website: {$a->site}
+
+has been deleted. Please apply for a new slot.';
+
+$string['email_deletedslot_html'] = '<p>The slot on on <strong>{$a->date}</strong> at <strong>{$a->time} </strong>,<br/>
+with the {$a->staffrole} <strong><a href="{$a->attendant_url}">{$a->attendant}</a></strong> for course:</p>
+
+<p><strong>{$a->course_short}: <a href="{$a->course_url}">{$a->course}</a></strong></p>
+
+<p>in the scheduler "<em><a href="{$a->scheduler_url}">{$a->module}</a></em>" on the website: <strong><a href="{$a->site_url}">{$a->site}</a></strong></p>
+
+<p><strong><span class="error">has been deleted</span></strong>. Please apply for a new slot.</p>';
+
+/******************* Slot updated *************************/
+
+$string['email_updatedslot_subject'] = '{$a->course_short}: Appointment updated by the teacher';
+
+$string['email_updatedslot_plain'] = 'Your appointment on {$a->date} at {$a->time},
+with the {$a->staffrole} {$a->attendant} for course:
+
+{$a->course_short}: {$a->course}
+
+in the scheduler titled "{$a->module}" on the website: {$a->site}
+
+has been updated. Please apply for a new slot.';
+
+$string['email_updatedslot_html'] = '<p>Your appoiment on <strong>{$a->date}</strong> at <strong>{$a->time} </strong>,<br/>
+with the {$a->staffrole} <strong><a href="{$a->attendant_url}">{$a->attendant}</a></strong> for course:</p>
+
+<p><strong>{$a->course_short}: <a href="{$a->course_url}">{$a->course}</a></strong></p>
+
+<p>in the scheduler "<em><a href="{$a->scheduler_url}">{$a->module}</a></em>" on the website: <strong><a href="{$a->site_url}">{$a->site}</a></strong></p>
+
+<p><strong><span class="error">has been updated</span></strong>. Please apply for a new slot.</p>';
+
+
+/******************* Slot revoked *************************/
+
 $string['email_teachercancelled_subject'] = '{$a->course_short}: Appointment cancelled by the teacher';
 
 $string['email_teachercancelled_plain'] = 'Your appointment on {$a->date} at {$a->time},

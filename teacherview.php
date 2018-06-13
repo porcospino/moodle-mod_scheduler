@@ -172,10 +172,29 @@ if ($action == 'updateslot') {
     $data = $mform->prepare_formdata($slot);
     $mform->set_data($data);
 
+
     if ($mform->is_cancelled()) {
         redirect($viewurl);
     } else if ($formdata = $mform->get_data()) {
         $mform->save_slot($slotid, $formdata);
+
+        $students = array();
+        foreach ($slot->get_appointments() as $app) {
+            $students[] = $app->studentid;
+        }
+        // Notify the student when an appoiment has been updated.
+        if ($scheduler->allownotifications) {
+            foreach ($students as $student) {
+                include_once($CFG->dirroot.'/mod/scheduler/mailtemplatelib.php');
+
+                $student = $DB->get_record('user', array('id' => $student));
+                $teacher = $DB->get_record('user', array('id' => $slot->teacherid));
+
+                scheduler_messenger::send_slot_notification($slot, 'bookingnotification', 'updatedslot',
+                                        $teacher, $student, $teacher, $student, $COURSE);
+            }
+        }
+
         redirect($viewurl,
                  get_string('slotupdated', 'scheduler'),
                  0,
@@ -187,6 +206,7 @@ if ($action == 'updateslot') {
         echo $output->footer($course);
         die;
     }
+
 
 }
 /************************************ Add session multiple slots form ****************************************/
