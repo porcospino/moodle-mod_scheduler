@@ -94,6 +94,8 @@ function scheduler_book_slot($scheduler, $slotid, $userid, $groupid, $mform, $fo
             $teacher = $DB->get_record('user', array('id' => $slot->teacherid), '*', MUST_EXIST);
             scheduler_messenger::send_slot_notification($slot, 'bookingnotification', 'applied',
                     $student, $teacher, $teacher, $student, $COURSE);
+            scheduler_messenger::send_slot_notification($slot, 'bookingnotification', 'bookingconfirmed',
+                    $teacher, $student, $teacher, $student, $COURSE);
         }
     }
     $slot->save();
@@ -274,6 +276,8 @@ if ($action == 'cancelbooking') {
                 $teacher = $DB->get_record('user', array('id' => $slot->teacherid));
                 scheduler_messenger::send_slot_notification($slot, 'bookingnotification', 'cancelled',
                                                             $student, $teacher, $teacher, $student, $COURSE);
+                scheduler_messenger::send_slot_notification($slot, 'bookingnotification', 'bookingcancelled',
+                                                            $teacher, $student, $teacher, $student, $COURSE);
             }
             \mod_scheduler\event\booking_removed::create_from_slot($slot)->trigger();
         }
