@@ -229,6 +229,24 @@ switch ($action) {
     case 'deleteslot':
         $slotid = required_param('slotid', PARAM_INT);
         $slot = $scheduler->get_slot($slotid);
+
+        $students = array();
+        foreach ($slot->get_appointments() as $app) {
+            $students[] = $app->studentid;
+        }
+        // Notify the student.
+        if ($scheduler->allownotifications) {
+            foreach ($students as $student) {
+                include_once($CFG->dirroot.'/mod/scheduler/mailtemplatelib.php');
+
+                $student = $DB->get_record('user', array('id' => $student));
+                $teacher = $DB->get_record('user', array('id' => $slot->teacherid));
+
+                scheduler_messenger::send_slot_notification($slot, 'bookingnotification', 'deletedslot',
+                                        $teacher, $student, $teacher, $student, $COURSE);
+            }
+        }
+
         $permissions->ensure($permissions->can_edit_slot($slot));
         scheduler_action_delete_slots(array($slot), $action, $viewurl);
         break;
@@ -244,6 +262,25 @@ switch ($action) {
                 $slots[] = $slot;
             }
         }
+        foreach($slots as $slot) {
+          $students = array();
+          foreach ($slot->get_appointments() as $app) {
+              $students[] = $app->studentid;
+          }
+          // Notify the student.
+          if ($scheduler->allownotifications) {
+              foreach ($students as $student) {
+                  include_once($CFG->dirroot.'/mod/scheduler/mailtemplatelib.php');
+
+                  $student = $DB->get_record('user', array('id' => $student));
+                  $teacher = $DB->get_record('user', array('id' => $slot->teacherid));
+
+                  scheduler_messenger::send_slot_notification($slot, 'bookingnotification', 'deletedslot',
+                                          $teacher, $student, $teacher, $student, $COURSE);
+              }
+          }
+        }
+
         scheduler_action_delete_slots($slots, $action, $viewurl);
         break;
     /************************************ Students were seen ***************************************************/
@@ -268,17 +305,17 @@ switch ($action) {
         $slot = $scheduler->get_slot($slotid);
         $permissions->ensure($permissions->can_edit_slot($slot));
 
-        $oldstudents = array();
+        $students = array();
         foreach ($slot->get_appointments() as $app) {
-            $oldstudents[] = $app->studentid;
+            $students[] = $app->studentid;
             $slot->remove_appointment($app);
         }
         // Notify the student.
         if ($scheduler->allownotifications) {
-            foreach ($oldstudents as $oldstudent) {
+            foreach ($students as $student) {
                 include_once($CFG->dirroot.'/mod/scheduler/mailtemplatelib.php');
 
-                $student = $DB->get_record('user', array('id' => $oldstudent));
+                $student = $DB->get_record('user', array('id' => $student));
                 $teacher = $DB->get_record('user', array('id' => $slot->teacherid));
 
                 scheduler_messenger::send_slot_notification($slot, 'bookingnotification', 'teachercancelled',

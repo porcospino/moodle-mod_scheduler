@@ -32,4 +32,4 @@ $plugin->component = 'mod_scheduler'; // Full name of the plugin (used for diagn
 $plugin->version   = 2019120300;      // The current module version (Date: YYYYMMDDXX).
 $plugin->release   = '3.x dev';       // Human-friendly version name.
 $plugin->requires  = 2019052000;      // requires Moodle 3.7.
-$plugin->maturity  = MATURITY_ALPHA;  // Development release - not for production use.
+$plugin->maturity  = MATURITY_STABLE; // Stable branch MOODLE_37_STABLE
